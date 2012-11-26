@@ -64,4 +64,6 @@
   <java-symbol type="drawable" name="stat_notify_privacy_guard_custom_plus" />
   <java-symbol type="drawable" name="stat_notify_privacy_guard_custom_plus_light" />
 
+  <java-symbol type="bool" name="skip_radio_power_off_on_sim_refresh_reset" />
+
 </resources>
