@@ -68,5 +68,6 @@
   <java-symbol type="bool" name="config_ascii_7bit_support_for_long_message" />
   <java-symbol type="string" name="config_partial_segment_expire_age" />
   <java-symbol type="bool" name="config_lte_capable" />
+  <java-symbol type="bool" name="config_send_sms1x_on_voice_call" />
 
 </resources>
