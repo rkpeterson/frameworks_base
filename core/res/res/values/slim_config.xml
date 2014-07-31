@@ -29,4 +29,8 @@
     <!-- This will be handled by modem if it is true-->
     <bool translatable="false" name="skip_radio_power_off_on_sim_refresh_reset">true</bool>
 
+    <!-- Configuartion to support 7bit Ascii encoding and decoding
+         for long messages. -->
+    <bool name="config_ascii_7bit_support_for_long_message">false</bool>
+
 </resources>
