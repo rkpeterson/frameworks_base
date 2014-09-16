@@ -121,4 +121,9 @@
     <string name="app_ops_delete_call_log">delete call log</string>
     <string name="app_ops_get_usage_stat">get your usage statistic</string>
 
+    <!-- Strings for tethered notification -->
+    <string name="tethered_notification_no_device_message">No connected device</string>
+    <string name="tethered_notification_one_device_message"><xliff:g id="count">%1$s</xliff:g> connected device</string>
+    <string name="tethered_notification_multi_device_message"><xliff:g id="count">%1$s</xliff:g> connected devices</string>
+
 </resources>
