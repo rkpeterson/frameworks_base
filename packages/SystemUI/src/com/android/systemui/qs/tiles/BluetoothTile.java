@@ -46,11 +46,6 @@ public class BluetoothTile extends QSTile<QSTile.BooleanState>  {
     }
 
     @Override
-    public boolean supportsDualTargets() {
-        return true;
-    }
-
-    @Override
     public DetailAdapter getDetailAdapter() {
         return mDetailAdapter;
     }
@@ -79,6 +74,11 @@ public class BluetoothTile extends QSTile<QSTile.BooleanState>  {
 
     @Override
     protected void handleSecondaryClick() {
+        mHost.startSettingsActivity(BLUETOOTH_SETTINGS);
+    }
+
+    @Override
+    protected void handleLongClick() {
         mHost.startSettingsActivity(BLUETOOTH_SETTINGS);
     }
 
