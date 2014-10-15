@@ -1053,10 +1053,19 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         // Set up the quick settings tile panel
         mQSPanel = (QSPanel) mStatusBarWindow.findViewById(R.id.quick_settings_panel);
         if (mQSPanel != null) {
-            final QSTileHost qsh = new QSTileHost(mContext, this,
+            final QSTileHost qsh;
+            if (isMSim()) {
+                qsh = new QSTileHost(mContext, this,
                     mBluetoothController, mLocationController, mRotationLockController,
-                    mNetworkController, mZenModeController, mHotspotController,
-                    mCastController, mFlashlightController,
+                    mMSimNetworkController, mZenModeController, mVolumeComponent,
+                    mHotspotController, mCastController, mFlashlightController,
+                    mUserSwitcherController, mKeyguardMonitor,
+                    mSecurityController);
+            } else {
+                qsh = new QSTileHost(mContext, this,
+                    mBluetoothController, mLocationController, mRotationLockController,
+                    mNetworkController, mZenModeController, mVolumeComponent,
+                    mHotspotController, mCastController, mFlashlightController,
                     mUserSwitcherController, mKeyguardMonitor,
                     mSecurityController);
             mQSPanel.setHost(qsh);
