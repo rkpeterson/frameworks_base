@@ -118,7 +118,7 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_default" translatable="false">
-        wifi,bt,inversion,cell,airplane,rotation,flashlight,location,cast,hotspot
+        wifi,bt,cell,airplane,rotation,flashlight,location,notifications,cast
     </string>
 
     <!-- The tiles to display in QuickSettings -->
@@ -261,5 +261,7 @@
 
     <!-- Zen toast visibility duration -->
     <integer name="zen_toast_visible_duration">500</integer>
+    <!-- Whether to enable data switch or not -->
+    <bool name="config_enableDataSwitch">false</bool>
 </resources>
 
