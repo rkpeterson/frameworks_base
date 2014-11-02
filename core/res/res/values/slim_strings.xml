@@ -126,4 +126,7 @@
     <string name="tethered_notification_one_device_message"><xliff:g id="count">%1$s</xliff:g> connected device</string>
     <string name="tethered_notification_multi_device_message"><xliff:g id="count">%1$s</xliff:g> connected devices</string>
 
+    <!-- USB_PREFERENCES: Notification for when no USB options chosen.  This is the title -->
+    <string name="usb_choose_notification_title">Touch for choose USB options.</string>
+
 </resources>
