@@ -5132,6 +5132,13 @@ public final class Settings {
         public static final String PRIVACY_GUARD_NOTIFICATION = "privacy_guard_notification";
 
         /**
+         * Whether user is allowed to pull down quick settings on secure keyguard.
+         * @hide
+         */
+        public static final String STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD
+                = "status_bar_locked_on_secure_keyguard";
+
+        /**
          * Names of the packages that the current user has explicitly allowed to
          * see all of the user's notifications, separated by ':'.
          *
@@ -5285,7 +5292,8 @@ public final class Settings {
             SLEEP_TIMEOUT,
             PRIVACY_GUARD_DEFAULT,
             PRIVACY_GUARD_NOTIFICATION,
-            ADVANCED_REBOOT
+            ADVANCED_REBOOT,
+            STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD
         };
 
         /**
