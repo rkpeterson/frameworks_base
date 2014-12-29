@@ -4191,6 +4191,12 @@ public final class Settings {
         public static final String ADB_NOTIFY = "adb_notify";
 
         /**
+         * The TCP/IP port to run ADB on, or -1 for USB
+         * @hide
+         */
+        public static final String ADB_PORT = "adb_port";
+
+        /**
          * The hostname for this device
          * @hide
          */
@@ -4274,6 +4280,30 @@ public final class Settings {
          */
         @Deprecated
         public static final String DEVICE_PROVISIONED = Global.DEVICE_PROVISIONED;
+
+       /**
+         * List of QS tile names
+         * @hide
+         */
+        public static final String QS_TILES = "qs_tiles";
+
+        /**
+         * Use "main" tiles on the first row of the quick settings panel
+         * 0 = no, 1 = yes
+         * @hide
+         */
+        public static final String QS_USE_MAIN_TILES = "qs_main_tiles";
+
+        /**
+         * @hide
+         */
+        public static final String QS_LOCATION_ADVANCED = "qs_location_advanced";
+
+        /** Whether to show the brightness slider in quick settings panel.
+         *
+         * @hide
+         */
+        public static final String QS_SHOW_BRIGHTNESS_SLIDER = "qs_show_brightness_slider";
 
         /**
          * Whether the current user has been set up via setup wizard (0 = false, 1 = true)
