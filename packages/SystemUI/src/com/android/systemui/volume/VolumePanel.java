@@ -676,6 +676,7 @@ public class VolumePanel extends Handler {
                 @Override
                 public void onClick(View v) {
                     expandVolumePanel();
+                    resetTimeout();
                 }
             });
             sc.seekbarView.setMax(getStreamMaxVolume(streamType));
