@@ -51,6 +51,7 @@ import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.LockscreenToggleTile;
 import com.android.systemui.qs.tiles.LteTile;
 import com.android.systemui.qs.tiles.NotificationsTile;
+import com.android.systemui.qs.tiles.PerfProfileTile;
 import com.android.systemui.qs.tiles.RoamingTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.ScreenTimeoutTile;
@@ -304,6 +305,8 @@ public class QSTileHost implements QSTile.Host {
                 return new ScreenTimeoutTile(this);
             case QSConstants.TILE_VISUALIZER:
                 return new VisualizerTile(this);
+            case QSConstants.TILE_PERFORMANCE:
+                return new PerfProfileTile(this);
             default:
                 throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
         }
