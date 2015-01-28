@@ -119,11 +119,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.android.systemui.BatteryLevelTextView;
 
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.keyguard.KeyguardHostView.OnDismissAction;
 import com.android.keyguard.ViewMediatorCallback;
 import com.android.systemui.BatteryMeterView;
+import com.android.systemui.BatteryMeterView.BatteryMeterMode;
 import com.android.systemui.DemoMode;
 import com.android.systemui.EventLogTags;
 import com.android.systemui.FontSizeUtils;
@@ -251,6 +253,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     BluetoothControllerImpl mBluetoothController;
     SecurityControllerImpl mSecurityController;
     BatteryController mBatteryController;
+    private BatteryMeterView mBatteryView;
+    private BatteryLevelTextView mBatteryTextView;
     LocationControllerImpl mLocationController;
     NetworkControllerImpl mNetworkController;
     HotspotControllerImpl mHotspotController;
@@ -428,6 +432,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BATTERY_SAVER_MODE_COLOR),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_BATTERY_STYLE),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -472,6 +482,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         mBatterySaverWarningColor = mContext.getResources()
                                 .getColor(com.android.internal.R.color.battery_saver_mode_color);
                     }
+            } else if (uri.equals(Settings.System.getUriFor(
+                            Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT)) ||
+                            uri.equals(Settings.System.getUriFor(
+                            Settings.System.STATUS_BAR_BATTERY_STYLE))) {
+                        mBatteryView.updateBatteryIconSettings();
+                        mHeader.updateBatteryIconSettings();
             }
             update();
         }
@@ -1093,8 +1109,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mUserInfoController.reloadUserInfo();
 
         mHeader.setBatteryController(mBatteryController);
-        ((BatteryMeterView) mStatusBarView.findViewById(R.id.battery)).setBatteryController(
-                mBatteryController);
+        mBatteryView = (BatteryMeterView) mStatusBarView.findViewById(R.id.battery);
+        mBatteryView.setBatteryController(mBatteryController);
+        mBatteryTextView = (BatteryLevelTextView) mStatusBarView.findViewById(
+                                                           R.id.battery_level_text);
+        mBatteryTextView.setBatteryController(mBatteryController);
         mKeyguardStatusBar.setBatteryController(mBatteryController);
         mHeader.setNextAlarmController(mNextAlarmController);
 
