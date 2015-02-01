@@ -55,6 +55,7 @@ import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.RoamingTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.ScreenTimeoutTile;
+import com.android.systemui.qs.tiles.UsbTetherTile;
 import com.android.systemui.qs.tiles.VisualizerTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.settings.CurrentUserTracker;
@@ -307,6 +308,8 @@ public class QSTileHost implements QSTile.Host {
                 return new VisualizerTile(this);
             case QSConstants.TILE_REBOOT:
                 return new RebootTile(this);
+            case QSConstants.TILE_USB_TETHER:
+                return new UsbTetherTile(this);
             default:
                 throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
         }
