@@ -31,6 +31,9 @@
     <!-- Kill app toast -->
     <string name="app_killed_message">App Killed</string>
 
+    <!-- Screenshot -->
+    <string name="shortcut_screenshot">Screenshot</string>
+
     <!-- Content description of the location tile in quick settings when on, battery saving mode (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_location_battery_saving">Location reporting: battery saving mode.</string>
     <!-- Content description of the location tile in quick settings when on, sensors only mode (not shown on the screen). [CHAR LIMIT=NONE] -->
