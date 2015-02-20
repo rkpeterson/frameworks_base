@@ -103,17 +103,6 @@ public class ApnTile extends QSTile<QSTile.State> {
     protected void handleUpdateState(State state, Object arg) {
         if (DEBUG) Log.i(TAG, "handleUpdateState");
 
-        // Hide APN switch button if DDS is set to non default subscription
-        int dataPhoneId = PhoneConstants.PHONE_ID1;
-        if (TelephonyManager.getDefault().isMultiSimEnabled()) {
-            dataPhoneId = (int) SubscriptionManager.getDefaultDataSubId();
-        }
-        if (dataPhoneId != PhoneConstants.PHONE_ID1) {
-            state.visible = false;
-        } else {
-            state.visible = hasIccCard() && !isAirplaneModeOn();
-        }
-
         String apnName = getCurrentApnName();
         if (!apnName.isEmpty() && !apnName.equals(mCurrentApnName)) {
             updateApnIcon();
