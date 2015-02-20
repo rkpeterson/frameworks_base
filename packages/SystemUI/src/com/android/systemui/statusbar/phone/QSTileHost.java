@@ -24,12 +24,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
-<<<<<<< HEAD
-import android.provider.Settings.Secure;
-=======
 import android.provider.Settings;
-import android.telephony.TelephonyManager;
->>>>>>> 25261b7... [1/2] Custom Quick Settings
 import android.util.Log;
 
 import com.android.internal.util.slim.QSConstants;
@@ -42,24 +37,18 @@ import com.android.systemui.qs.tiles.BluetoothTile;
 import com.android.systemui.qs.tiles.CastTile;
 import com.android.systemui.qs.tiles.CellularTile;
 import com.android.systemui.qs.tiles.ColorInversionTile;
-<<<<<<< HEAD
-=======
 import com.android.systemui.qs.tiles.CompassTile;
 import com.android.systemui.qs.tiles.DataTile;
 import com.android.systemui.qs.tiles.DdsTile;
->>>>>>> 25261b7... [1/2] Custom Quick Settings
 import com.android.systemui.qs.tiles.FlashlightTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LocationTile;
-<<<<<<< HEAD
-=======
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.LockscreenToggleTile;
 import com.android.systemui.qs.tiles.LteTile;
 import com.android.systemui.qs.tiles.NotificationsTile;
 import com.android.systemui.qs.tiles.RoamingTile;
->>>>>>> 25261b7... [1/2] Custom Quick Settings
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.ScreenTimeoutTile;
 import com.android.systemui.qs.tiles.VisualizerTile;

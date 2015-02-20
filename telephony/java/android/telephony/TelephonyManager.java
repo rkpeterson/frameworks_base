@@ -1275,21 +1275,6 @@ public class TelephonyManager {
     }
 
     /**
-     * Returns the icc operator numeric for a given subId
-     *
-     */
-    /** {@hide} */
-    public String getIccOperatorNumeric(long subId) {
-        try {
-            return getITelephony().getIccOperatorNumeric(subId);
-        } catch (RemoteException ex) {
-            return null;
-        } catch (NullPointerException ex) {
-            return null;
-        }
-    }
-
-    /**
      * {@hide}
      */
     public void toggleLTE(boolean on) {
@@ -3428,6 +3413,12 @@ public class TelephonyManager {
     /** @hide */
     @SystemApi
     public void setDataEnabled(boolean enable) {
+        setDataEnabledUsingSubId(getDefaultSubscription(), enable);
+    }
+
+    /** @hide */
+    @SystemApi
+    public void setDataEnabledUsingSubId(long subId, boolean enable) {
         try {
             AppOpsManager appOps = (AppOpsManager)mContext.getSystemService(Context.APP_OPS_SERVICE);
             if (enable) {
@@ -3436,7 +3427,7 @@ public class TelephonyManager {
                     return;
                 }
             }
-            getITelephony().setDataEnabled(enable);
+            getITelephony().setDataEnabledUsingSubId(subId, enable);
         } catch (RemoteException e) {
             Log.e(TAG, "Error calling setDataEnabled", e);
         }

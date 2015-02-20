@@ -559,6 +559,10 @@
 
     <!-- QuickSettings: Airplane mode [CHAR LIMIT=NONE] -->
     <string name="quick_settings_airplane_mode_label">Airplane mode</string>
+    <!-- QuickSettings: Mobile data [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_mobile_data_label">Mobile data</string>
+    <!-- QuickSettings: Roaming [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_roaming_label">Roaming</string>
     <!-- QuickSettings: Battery Charging [CHAR LIMIT=NONE] -->
     <string name="quick_settings_battery_charging_label">Charging, <xliff:g id="number">%d</xliff:g><xliff:g id="percent">%%</xliff:g></string>
     <!-- QuickSettings: Battery Charged [CHAR LIMIT=NONE] -->

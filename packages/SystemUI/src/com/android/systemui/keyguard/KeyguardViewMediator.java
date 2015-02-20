@@ -964,15 +964,6 @@ public class KeyguardViewMediator extends SystemUI {
         showLocked(options);
     }
 
-    private boolean isSimLockedOrMissing (long subId, boolean requireSim) {
-        IccCardConstants.State state = mUpdateMonitor.getSimState(subId);
-        boolean simLockedOrMissing = (state != null && state.isPinLocked())
-                || ((state == IccCardConstants.State.ABSENT
-                || state == IccCardConstants.State.PERM_DISABLED)
-                && requireSim);
-        return simLockedOrMissing;
-    }
-
     public boolean lockscreenEnforcedByDevicePolicy() {
         DevicePolicyManager dpm = (DevicePolicyManager)
                 mContext.getSystemService(Context.DEVICE_POLICY_SERVICE);
