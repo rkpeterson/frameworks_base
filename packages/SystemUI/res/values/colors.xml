@@ -153,4 +153,7 @@
     <color name="exposed_headsup_scrim_start">#55000000</color>
     <color name="exposed_headsup_scrim_end">#00000000</color>
 
+    <!-- tint of the Visualizer tile -->
+    <color name="visualizer_fill_color">#96FFFFFF</color>
+
 </resources>
