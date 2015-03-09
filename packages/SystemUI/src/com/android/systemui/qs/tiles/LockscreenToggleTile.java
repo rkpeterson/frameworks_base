@@ -16,17 +16,14 @@
 
 package com.android.systemui.qs.tiles;
 
-import android.app.admin.DevicePolicyManager;
+import android.app.KeyguardManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 
-import android.widget.Toast;
 import com.android.systemui.R;
-import com.android.systemui.SystemUIApplication;
-import com.android.systemui.keyguard.KeyguardViewMediator;
 import com.android.systemui.qs.QSTile;
 import com.android.systemui.statusbar.policy.KeyguardMonitor;
 
@@ -37,20 +34,18 @@ public class LockscreenToggleTile extends QSTile<QSTile.BooleanState>
             "com.android.internal.action.KEYGUARD_SERVICE_STATE_CHANGED";
     private static final String KEYGUARD_SERVICE_EXTRA_ACTIVE = "active";
 
-    private static final String KEY_ENABLED = "lockscreen_enabled";
+    private static final String KEY_DISABLED = "lockscreen_disabled";
 
-    private KeyguardViewMediator mKeyguardViewMediator;
     private KeyguardMonitor mKeyguard;
-    private boolean mPersistedState;
+    private KeyguardManager.KeyguardLock mLock;
+    private boolean mLockscreenDisabled;
     private boolean mKeyguardBound;
     private SharedPreferences mPrefs;
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            mKeyguardBound = intent.getBooleanExtra(KEYGUARD_SERVICE_EXTRA_ACTIVE, false);
-            applyLockscreenState();
-            refreshState();
+            updateBasedOnIntent(intent);
         }
     };
 
@@ -59,12 +54,13 @@ public class LockscreenToggleTile extends QSTile<QSTile.BooleanState>
         mPrefs = mContext.getSharedPreferences("quicksettings", Context.MODE_PRIVATE);
 
         mKeyguard = host.getKeyguardMonitor();
-        mKeyguardViewMediator =
-                ((SystemUIApplication) mContext.getApplicationContext()).getComponent(KeyguardViewMediator.class);
-        mPersistedState = getPersistedState();
+        mLockscreenDisabled = getPersistedState();
 
         IntentFilter filter = new IntentFilter(KEYGUARD_SERVICE_ACTION_STATE_CHANGE);
-        mContext.registerReceiver(mReceiver, filter);
+        Intent i = mContext.registerReceiver(mReceiver, filter);
+        if (i != null) {
+            updateBasedOnIntent(i);
+        }
     }
 
     @Override
@@ -83,32 +79,31 @@ public class LockscreenToggleTile extends QSTile<QSTile.BooleanState>
 
     @Override
     protected void handleClick() {
-        setPersistedState(!mPersistedState);
+        setLockscreenEnabled(!mLockscreenDisabled);
         applyLockscreenState();
         refreshState();
     }
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
-        final boolean lockscreenEnforced = mKeyguardViewMediator.lockscreenEnforcedByDevicePolicy();
-        final boolean lockscreenEnabled = lockscreenEnforced
-                || mPersistedState
-                || mKeyguardViewMediator.getKeyguardEnabledInternal();
+        boolean hideTile = !mLockscreenDisabled
+                && mKeyguard.isShowing() && mKeyguard.isSecure();
 
-        state.visible = mKeyguardBound
-                && !(mKeyguard.isShowing() && mKeyguard.isSecure());
-        state.label = mContext.getString(lockscreenEnforced
-                ? R.string.quick_settings_lockscreen_label_enforced
-                : R.string.quick_settings_lockscreen_label);
-        state.iconId = lockscreenEnabled
-                ? R.drawable.ic_qs_lock_screen_on
-                : R.drawable.ic_qs_lock_screen_off;
+        state.visible = mKeyguardBound && !hideTile;
+        state.label = mContext.getString(R.string.quick_settings_lockscreen_label);
+        state.iconId = mKeyguardBound && mLockscreenDisabled
+                ? R.drawable.ic_qs_lock_screen_off
+                : R.drawable.ic_qs_lock_screen_on;
     }
 
     @Override
-    protected void handleDestroy() {
-        super.handleDestroy();
+    public void destroy() {
+        super.destroy();
         mContext.unregisterReceiver(mReceiver);
+        if (mLock != null) {
+            mLock.reenableKeyguard();
+            mLock = null;
+        }
     }
 
     @Override
@@ -116,21 +111,34 @@ public class LockscreenToggleTile extends QSTile<QSTile.BooleanState>
         refreshState();
     }
 
+    private void updateBasedOnIntent(Intent intent) {
+        mKeyguardBound = intent.getBooleanExtra(KEYGUARD_SERVICE_EXTRA_ACTIVE, false);
+        applyLockscreenState();
+    }
+
     private void applyLockscreenState() {
         if (!mKeyguardBound) {
-            // do nothing yet
             return;
         }
-
-        mKeyguardViewMediator.setKeyguardEnabledInternal(mPersistedState);
+        if (mLock == null) {
+            KeyguardManager kgm = (KeyguardManager)
+                    mContext.getApplicationContext().getSystemService(Context.KEYGUARD_SERVICE);
+            mLock = kgm.newKeyguardLock(LockscreenToggleTile.class.getSimpleName());
+        }
+        if (mLockscreenDisabled) {
+            mLock.disableKeyguard();
+        } else {
+            mLock.reenableKeyguard();
+        }
+        refreshState();
     }
 
     private boolean getPersistedState() {
-        return mPrefs.getBoolean(KEY_ENABLED, true);
+        return mPrefs.getBoolean(KEY_DISABLED, false);
     }
 
-    private void setPersistedState(boolean enabled) {
-        mPrefs.edit().putBoolean(KEY_ENABLED, enabled).apply();
-        mPersistedState = enabled;
+    private void setLockscreenEnabled(boolean disabled) {
+        mPrefs.edit().putBoolean(KEY_DISABLED, disabled).apply();
+        mLockscreenDisabled = disabled;
     }
 }
