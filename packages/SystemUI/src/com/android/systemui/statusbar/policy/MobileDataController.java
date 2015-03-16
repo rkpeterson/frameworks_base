@@ -33,6 +33,7 @@ import android.net.NetworkStatsHistory;
 import android.net.NetworkTemplate;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.format.DateUtils;
 import android.text.format.Time;
@@ -197,8 +198,10 @@ public class MobileDataController {
 
     public boolean isMobileDataSupported() {
         // require both supported network and ready SIM
+        int prfDataPhoneId = SubscriptionManager.getPhoneId(
+                SubscriptionManager.getDefaultDataSubId());
         return mConnectivityManager.isNetworkSupported(TYPE_MOBILE)
-                && mTelephonyManager.getSimState() == SIM_STATE_READY;
+                && mTelephonyManager.getSimState(prfDataPhoneId) == SIM_STATE_READY;
     }
 
     public boolean isMobileDataEnabled() {
