@@ -189,11 +189,6 @@ public class VolumeUI extends SystemUI {
         }
 
         @Override
-        public void setVolumePanel(VolumePanel panel) {
-            mPanel = (panel == null) ? mDialogPanel : panel;
-        }
-
-        @Override
         public void dispatchDemoCommand(String command, Bundle args) {
             mPanel.dispatchDemoCommand(command, args);
         }
